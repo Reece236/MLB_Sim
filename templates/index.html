@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Lineup Simulator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #fff8dc; /* Creme color */
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin-top: 50px;
+        }
+
+        .lineup-card {
+            display: flex;
+            align-items: stretch;
+            justify-content: space-between;
+        }
+
+        .input-section, .simulator-section {
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #add8e6; /* Baby blue */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .input-section {
+            width: 45%; /* Adjust the width as needed */
+        }
+
+        .simulator-section {
+            width: 50%; /* Adjust the width as needed */
+        }
+
+        h1, h3 {
+            color: #ff6961; /* Red */
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            color: #333; /* Black */
+        }
+
+        .btn-primary {
+            background-color: #ff6961 !important; /* Red */
+            border-color: #ff6961 !important;
+            font-size: 16px;
+            padding: 8px 16px;
+        }
+
+        .btn-primary:hover {
+            background-color: #dc3545 !important; /* Darker red on hover */
+            border-color: #dc3545 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Single Lineup Simulator</h1>
+        <div class="lineup-card">
+            <!-- Input Section -->
+            <div class="input-section">
+                <h3>Lineup Inputs</h3>
+                <form id="simulationForm" action="/simulate" method="post">
+                    <!-- Number of simulations -->
+                    <div class="form-group">
+                        <label for="n">Simulations to Run:</label>
+                        <input type="text" class="form-control" id="n" name="n" placeholder="Enter" value="10", style="width: 100px; display: inline-block;">
+                    </div>
+
+                    <!-- Lineup -->
+                    <div class="form-group" style="text-align: left;">
+                        <label for="lineup" style="display: block; margin-bottom: 10px;">Lineup Order:</label>
+                        {% for i in range(1, 10) %}
+                            <div style="display: inline-block; margin-bottom: 5px;">
+                                <label for="hitter{{i}}" style="width: 50px; text-align: right; margin-right: 10px; display: inline-block;">{{i}})</label>
+                                <select class="form-control" id="hitter{{i}}" name="hitter{{i}}" style="width: 230px; display: inline-block;">
+                                    {% for hitter in hitters %}
+                                        <option value="{{ hitter }}">{{ hitter }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
+
+
+                    <!-- Starting Pitcher -->
+                    <div class="form-group">
+                        <label for="pitcher">Starter:</label>
+                        <select class="form-control" id="pitcher" name="pitcher" style="width: 200px; display: inline-block;">
+                            {% for pitcher in pitchers %}
+                                <option value="{{ pitcher }}">{{ pitcher }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Bullpen Team -->
+                    <div class="form-group">
+                        <label for="pitch_team">Bullpen Team:</label>
+                        <select class="form-control" id="pitch_team" name="pitch_team" style="width: 100px; display: inline-block;">
+                            {% for team in bullpen_teams %}
+
+                                <option value="{{ team }}">{{ team }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Run Simulation Button with smaller size -->
+                    <button type="button" class="btn btn-primary btn-sm" onclick="runSimulation()">Run Simulation</button>
+                </form>
+            </div>
+
+            <!-- Simulator Section -->
+            <div class="simulator-section">
+                <!-- Placeholder for Simulator Section -->
+                <h3>Simulation Results</h3>
+                <p> </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Updated Bootstrap JS and jQuery for modal functionality -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+    function runSimulation() {
+        // Get form data
+        var formData = $('#simulationForm').serialize();
+
+        // Clear all children except the first item in simulatorSection
+        var simulatorSection = $('.simulator-section');
+        simulatorSection.children(':not(:first-child)').remove();
+
+
+
+        // Send AJAX request to server
+        $.ajax({
+            type: 'POST',
+            url: '/simulate',
+            data: formData,
+            success: function (response) {
+
+                var simulatorSection = $('.simulator-section');
+                simulatorSection.children(':not(:first-child)').remove();
+
+                // Create a temporary container to parse the HTML
+                var tempContainer = $('<div>').html(response);
+
+                // Extract the average runs value from the parsed HTML
+                var avgRuns = tempContainer.find('.container p').text().match(/\d+(\.\d+)?/);
+
+                // Check if the average runs value was found
+                if (avgRuns) {
+                    // Create a container div with Bootstrap styling
+                    var resultContainer = $('<div>').addClass('container mt-5');
+
+                    // clear resultContainer
+                    resultContainer.empty();
+
+                    // Add heading and paragraph elements with the extracted average runs value
+                    resultContainer.append($('<p>').css({'font-weight': 'bold', 'font-size': '40px'}).text(Math.round(avgRuns[0] * 10) / 10 + ' Runs per Game'));
+
+                    var simulatorSection = $('.simulator-section');
+                    simulatorSection.children(':not(:first-child)').remove();
+                    simulatorSection.append(resultContainer);
+                } else {
+                    console.error('Error: Unable to extract average runs value from the response.');
+                }
+            },
+            error: function (error) {
+                console.error('Error:', error);
+                // Handle errors if needed
+            }
+        });
+    }
+
+    </script>
+</body>
+</html>
