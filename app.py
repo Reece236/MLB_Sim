@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request
 import joblib
-from single_game import SingleGameSimulator
+from src.single_game import SingleGameSimulator
 
 app = Flask(__name__)
 
-pitcher_name_to_id = joblib.load('pitcher_name_to_id.pkl')
-batter_name_to_id = joblib.load('batter_name_to_id.pkl')
-pitch_teams = joblib.load('unique_pitch_teams.pkl')
+pitcher_name_to_id = joblib.load('data/pitcher_name_to_id.pkl')
+batter_name_to_id = joblib.load('data/batter_name_to_id.pkl')
+pitch_teams = joblib.load('data/unique_pitch_teams.pkl')
 
 # Set up the dropdown options
 hitters = list(batter_name_to_id.keys())
@@ -31,17 +31,17 @@ def simulate():
     pitch_team = request.form['pitch_team']
 
     # Load the data
-    transition_probs = joblib.load('simple_event_next_state_data.pkl')
-    dist_bt = joblib.load('reg_bat_stats.pkl')
-    dist_pt = joblib.load('pitch_stats_updated.pkl')
-    team_pitching = joblib.load('team_bullpen_split.pkl')
-    bat_sides = joblib.load('bat_sides.pkl')
-    lg_dist = joblib.load('lg_dist_updated.pkl')
-    stat_col = joblib.load('stat_col.pkl')
-    pitcher_name_to_id = joblib.load('pitcher_name_to_id.pkl')
-    batter_name_to_id = joblib.load('batter_name_to_id.pkl')
-    pitch_teams = joblib.load('unique_pitch_teams.pkl')
-    pitcher_hands = joblib.load('pitcher_hands.pkl')
+    transition_probs = joblib.load('data/simple_event_next_state_data.pkl')
+    dist_bt = joblib.load('data/reg_bat_stats.pkl')
+    dist_pt = joblib.load('data/pitch_stats_updated.pkl')
+    team_pitching = joblib.load('data/team_bullpen_split.pkl')
+    bat_sides = joblib.load('data/bat_sides.pkl')
+    lg_dist = joblib.load('data/lg_dist_updated.pkl')
+    stat_col = joblib.load('data/stat_col.pkl')
+    pitcher_name_to_id = joblib.load('data/pitcher_name_to_id.pkl')
+    batter_name_to_id = joblib.load('data/batter_name_to_id.pkl')
+    pitch_teams = joblib.load('data/unique_pitch_teams.pkl')
+    pitcher_hands = joblib.load('data/pitcher_hands.pkl')
 
     pitcher_dict = {pitcher_name_to_id[pitcher]: {'Runs Cap': 5, 'Inning Cap': 7,
                                                   'Throws': pitcher_hands[pitcher_name_to_id[pitcher]]}}
