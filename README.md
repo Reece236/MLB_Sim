@@ -13,10 +13,15 @@ Run `app.py` to simulate an individual lineup.
   #### Inputs:
 
   `Simulations to Run`: Number of simulations for the lineup
+  
   `Lineup Order`: The lineup order
+  
   `Starter`: The starting pitcher
+  
   `SP Runs Cap`: Max runs allowed before pulling starting pitcher
+  
   `SP Innings Cap `: Max Innings Pitched allowed for the starting pitcher
+  
   `Bullpen Team`: Bullpen team to use after replacing starter. Optimizes platoon advantage based on current batter.
 
 
@@ -52,12 +57,12 @@ Run `app.py` to simulate an individual lineup.
   
   `runs_cap`: the runs cap for a starting pitcher
   
-   runs_cap = [4, 4]
+   Ex: runs_cap = [4, 4]
   
   
-   `inning_cap`: the inning cap for a starting pitcher
+  `inning_cap`: the inning cap for a starting pitcher
   
-    inning_cap = [5, 5]
+   Ex: inning_cap = [5, 5]
 
 
   
