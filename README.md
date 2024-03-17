@@ -6,8 +6,8 @@
 
 ## Uses
 
-### `python app.py`
 -----------------------------
+### `python app.py`
 
 Run `app.py` to simulate an individual lineup.
 
@@ -26,9 +26,8 @@ Run `app.py` to simulate an individual lineup.
   `Bullpen Team`: Bullpen team to use after replacing starter. Optimizes platoon advantage based on current batter.
 
 
-
-### `python bulk_lineups.py`
 -----------------------------
+### `python bulk_lineups.py`
 
   `bulk_lineups.py` allows one to simulate multiple games at a time. Adjusts inputs, listed below, before running file.
   
