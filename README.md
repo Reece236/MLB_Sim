@@ -6,11 +6,11 @@
 
 ## Uses
 
-### `app.py`
+## `app.py`
 
-Run `app.py` to simulate an individual lineup
+Run `app.py` to simulate an individual lineup.
 
-### `bulk_lineups.py`
+## `bulk_lineups.py`
 
 `bulk_lineups.py` allows one to simulate multiple games at a time. 
 
@@ -47,6 +47,5 @@ Run `app.py` to simulate an individual lineup
  `inning_cap`: the inning cap for a starting pitcher
 
   inning_cap = [5, 5]
-
 
 Uses 2023 Statcast data. 
