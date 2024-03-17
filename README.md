@@ -10,8 +10,6 @@
 
 
 ### `python app.py`
------------------------------  
-
 
 Run `app.py` to simulate an individual lineup.
 
@@ -35,8 +33,6 @@ Run `app.py` to simulate an individual lineup.
 
 -----------------------------
 ### `python bulk_lineups.py`
------------------------------  
-
 
 
   `bulk_lineups.py` allows one to simulate multiple games at a time. Adjusts inputs, listed below, before running file.
