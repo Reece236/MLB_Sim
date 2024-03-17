@@ -14,7 +14,7 @@ Run `app.py` to simulate an individual lineup.
 
 `bulk_lineups.py` allows one to simulate multiple games at a time. 
 
-###### Inputs:
+#### Inputs:
 
 `n`: Number of simulations for each lineup
  
