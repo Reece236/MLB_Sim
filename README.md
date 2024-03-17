@@ -7,6 +7,9 @@
 ## Uses
 
 
+
+
+
 -----------------------------
 ### `python app.py`
 -----------------------------
@@ -27,6 +30,9 @@ Run `app.py` to simulate an individual lineup.
   `SP Innings Cap `: Max Innings Pitched allowed for the starting pitcher
   
   `Bullpen Team`: Bullpen team to use after replacing starter. Optimizes platoon advantage based on current batter.
+
+
+
 
 
 -----------------------------
