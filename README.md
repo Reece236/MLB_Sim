@@ -71,6 +71,7 @@ Run `app.py` to simulate an individual lineup.
   
    Ex: inning_cap = [5, 5]
 
+-----------------------------  
 
   
 Uses 2023 Statcast data. 
