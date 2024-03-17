@@ -6,15 +6,24 @@
 
 ## Uses
 
-### `app.py`
+### `python app.py`
 
 Run `app.py` to simulate an individual lineup.
 
+  #### Inputs:
+
+  `Simulations to Run`: Number of simulations for the lineup
+  `Lineup Order`: The lineup order
+  `Starter`: The starting pitcher
+  `SP Runs Cap`: Max runs allowed before pulling starting pitcher
+  `SP Innings Cap `: Max Innings Pitched allowed for the starting pitcher
+  `Bullpen Team`: Bullpen team to use after replacing starter. Optimizes platoon advantage based on current batter.
 
 
-### `bulk_lineups.py`
 
-  `bulk_lineups.py` allows one to simulate multiple games at a time. 
+### `python bulk_lineups.py`
+
+  `bulk_lineups.py` allows one to simulate multiple games at a time. Adjusts inputs, listed below, before running file.
   
   #### Inputs:
   
