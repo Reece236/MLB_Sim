@@ -1,5 +1,7 @@
 import joblib
+import argparse
 from src.single_game import SingleGameSimulator
+from constants import LINEUPS, PITCHERS, PITCH_TEAMS, RUNS_CAP, INNINGS_CAP
 
 def simulate(n, lineup, pitcher, pitch_team, run_cap=5, inning_cap=7):
 
@@ -39,35 +41,53 @@ def simulate(n, lineup, pitcher, pitch_team, run_cap=5, inning_cap=7):
 
     return avg_runs
 
-if __name__ == '__main__':
+def main(n: int, lineups: list, pitchers: list, pitch_teams: list, runs_cap: list, inning_cap: list):
+    """
+    Simulate a bulk of games for a list of lineups and pitchers.
 
-    # Simulations per lineup
-    n = 10000
+    Parameters:
+    n (int): Number of games to simulate
+    lineups (list): List of lineups
+    pitchers (list): List of pitchers
+    pitch_teams (list): List of pitch teams
+    runs_cap (list): List of runs caps for each pitcher
+    inning_cap (list): List of inning caps for each pitcher
 
-    # List of lineups
-    # Players in Last, First, Team format
-    lineups = [['Marte, Ketel, AZ', 'Carroll, Corbin, AZ', 'Moreno, Gabriel, AZ','Walker, Christian, AZ', 'Pham, Tommy, AZ',
-                'Gurriel, Lourdes, AZ', 'Longoria, Evan, AZ', 'Rivera, Emmanuel, AZ', 'Perdomo, Geraldo, AZ'],
-               ['Schwarber, Kyle, PHI', 'Turner, Trea, PHI', 'Harper, Bryce, PHI', 'Bohm, Alec, PHI', 'Stott, Bryson, PHI',
-                'Realmuto, J.T., PHI', 'Castellanos, Nick, PHI', 'Marsh, Brandon, PHI', 'Rojas, Johan, PHI']]
-
-    # List of pitchers
-    # Players in Last, First, Team format
-    pitchers = ['Suarez, Ranger, PHI', 'Pfaadt, Brandon, AZ']
-
-    # List of pitch teams
-    pitch_teams = ['PHI', 'AZ']
-
-    # Set the caps for runs and innings for each starting pitcher
-    runs_cap = [4, 4]
-    inning_cap = [5, 5]
+    """
 
     runs_list = []
 
     for i in range(len(lineups)):
-        runs = simulate(n, lineups[i], pitchers[i], pitch_teams[i])
+        runs = simulate(n, lineups[i], pitchers[i], pitch_teams[i], runs_cap[i], inning_cap[i])
         runs_list.append(runs)
 
     for i in range(len(runs_list)):
         print(f'{lineups[i]}:')
         print(f'{round(runs_list[i],2)} runs per game\n')
+
+def arg_parser():
+    """
+    Parse the command line arguments.
+
+    Returns:
+    args: The command line arguments
+    """
+
+    parser = argparse.ArgumentParser(description='Simulate a bulk of games for a list of lineups and pitchers.')
+    parser.add_argument('-n', type=int, help='Number of games to simulate', required=True)
+    parser.add_argument('-lineups', nargs='+', help='List of lineups', default=LINEUPS)
+    parser.add_argument('-pitchers', nargs='+', help='List of pitchers', default=PITCHERS)
+    parser.add_argument('-pitch_teams', nargs='+', help='List of pitch teams', default=PITCH_TEAMS)
+    parser.add_argument('-runs_cap', nargs='+', type=int, help='List of runs caps for each pitcher', default=RUNS_CAP)
+    parser.add_argument('-inning_cap', nargs='+', type=int, help='List of inning caps for each pitcher', default=INNINGS_CAP)
+
+
+    args = parser.parse_args()
+
+    return args
+
+if __name__ == '__main__':
+
+    args = arg_parser()
+    
+    main(args.n, args.lineups, args.pitchers, args.pitch_teams, args.runs_cap, args.inning_cap)
